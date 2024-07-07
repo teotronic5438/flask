@@ -27,7 +27,7 @@ def get_db():
     return g.db
 
 # Funcion para cerrar la conexion a la base de datos
-def close_db():
+def close_db(e=None):
     # Extraer la conexion a la base de datos de 'g' y eliminarla
     db = g.pop('db', None)
 
@@ -56,3 +56,21 @@ def test_connection():
         print("Conexión exitosa a la base de datos")
     except psycopg2.DatabaseError as e:
         print(f"Error al conectar a la base de datos: {e}")
+
+def create_table_tareas():
+    conn = psycopg2.connect(**DATABASE_CONFIG)
+    cur = conn.cursor()
+    cur.execute(
+        """
+        CREATE TABLE IF NOT EXISTS tareas(
+            id SERIAL PRIMARY KEY,
+            nombre VARCHAR(50) NOT NULL,
+            descripcion VARCHAR(300) NOT NULL,
+            fecha_creacion DATE NOT NULL,
+            activa BOOLEAN NOT NULL
+        );
+        """)
+    conn.commit()
+
+    cur.close()
+    conn.close()
