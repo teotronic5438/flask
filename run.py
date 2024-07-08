@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 from app.views import * # me traigo todo
 from app.database import * # me traigo todo
 
@@ -38,6 +39,9 @@ Comandos para entorno virtual:
 try:
     # test_connection()
     init_app(app)
+
+    CORS(app)
+
     create_table_tareas()
 except Exception as e:
     print(f"Error al conectar a la base de datos: {e}")
