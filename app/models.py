@@ -79,7 +79,7 @@ class Task:
     
     # este metodo atiende los dos casos
     def save(self):
-        db = get_db
+        db = get_db()
         cursor = db.cursor()
         if self.id_task: # actualizar tareas existentes
             cursor.execute(
